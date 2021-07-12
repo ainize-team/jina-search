@@ -23,7 +23,9 @@ const HomeContainer = ({hideButtons = false}) => {
                 body: JSON.stringify({
                     "top_k": 50,
                     "mode": "search",
-                    "data": [input]})})
+                    "data": [input]
+                })
+            })
         if (postResponse.status === 200) {
             const response = await postResponse.json();
             console.log(response["search"]["docs"][0])
