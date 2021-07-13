@@ -7,10 +7,6 @@ const Search = ({input, result, buttonVisible, setInput, search}) => {
     const handleChangeInput = (event) => {
         setInput(event.target.value);
     }
-    const handleSubmit = (event) =>{
-        event.preventDefault();
-    }
-
 
     return (
         <form className="search" onSubmit={search}>
