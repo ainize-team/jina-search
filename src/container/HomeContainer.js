@@ -11,31 +11,33 @@ const HomeContainer = ({hideButtons = false}) => {
         e.preventDefault();
         // window.location.href = "/search"
         console.log("You hit search", input);
+        if (input.length>0) {
+            const model = models.modelData[0];
+            let url = model.modelUrl;
+            setButtonVisible(true)
+            const postResponse = await fetch(url,
+                {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify({
+                        "top_k": 50,
+                        "mode": "search",
+                        "data": [input]
+                    })
+                })
+            if (postResponse.status === 200) {
+                const response = await postResponse.json();
+                console.log(response["search"]["docs"][0])
+                let qa = "";
+                var i;
+                for (i = 0; i < 50; i++)
+                    qa += response["search"]["docs"][0]["matches"][i]["text"];
 
-        const model = models.modelData[0];
-        let url = model.modelUrl;
+                rs.push(qa);
 
-        setButtonVisible(true)
-
-        const postResponse = await fetch(url,
-            {method: "POST",
-                headers: { "Content-Type": "application/json"},
-                body: JSON.stringify({
-                    "top_k": 50,
-                    "mode": "search",
-                    "data": [input]})})
-        if (postResponse.status === 200) {
-            const response = await postResponse.json();
-            console.log(response["search"]["docs"][0])
-            let qa = "";
-            var i;
-            for (i=0;i<50;i++)
-            qa += response["search"]["docs"][0]["matches"][i]["text"];
-
-            rs.push(qa);
-
-            console.log(qa)
-            setResult(qa);
+                console.log(qa)
+                setResult(qa);
+            }
         }
         // Show the result
         // let result = await gpt3.getSnippetPrediction(input)
@@ -50,7 +52,7 @@ const HomeContainer = ({hideButtons = false}) => {
             buttonVisible={buttonVisible}
             setInput={setInput}
             search={search}
-            setResult={setResult}
+
         />
     );
 }

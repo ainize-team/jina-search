@@ -3,7 +3,7 @@ import ainizeIcon from '../image/ainize-logo.svg';
 import githubIcon from '../image/git-hub-icon.svg';
 import infoIcon from '../image/info-icon.svg';
 import Search from './Search';
-const Home = ({input, result, buttonVisible, setInput, search,setResult}) => {
+const Home = ({input, result, buttonVisible, setInput, search}) => {
     return(
         <div className="home">
             <div className="home__body">
@@ -15,7 +15,7 @@ const Home = ({input, result, buttonVisible, setInput, search,setResult}) => {
                         buttonVisible={buttonVisible}
                         setInput={setInput}
                         search={search}
-                        setResult={setResult}/>
+                        />
                 </div>
                 <div className="home__footer">
                     <a href="" className="about">

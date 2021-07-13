@@ -3,20 +3,20 @@ import './Search.scss';
 import sendIcon from '../image/send.svg'
 import { Button } from "@material-ui/core";
 
-const Search = ({input, result, buttonVisible, setInput, search,setResult}) => {
+const Search = ({input, result, buttonVisible, setInput, search}) => {
     const handleChangeInput = (event) => {
         setInput(event.target.value);
     }
-    const handleReset = () => {
-        setResult([])
+    const handleSubmit = (event) =>{
+        event.preventDefault();
     }
 
 
     return (
-        <form className="search">
+        <form className="search" onSubmit={search}>
             {/* <SearchBox/> */}
             <div className="search__input">
-                <input value={input} onChange={(e) => input.length >= 0 ? handleChangeInput(e):handleReset()} />
+                <input value={input} onChange={(e) => handleChangeInput(e)} />
                 <img src={sendIcon} onClick={search} alt="search"/>
             </div>
             {result ? (<div className="search__result">
