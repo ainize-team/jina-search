@@ -16,7 +16,11 @@ const Search = ({input, result, buttonVisible, setInput, search}) => {
                 <img src={sendIcon} onClick={search} alt="search"/>
             </div>
             {result ? (<div className="search__result">
-                {result}
+                {result.map(result => result.map(
+                    elements => { return (<li>
+                        {elements}
+                    </li>)}
+                ))}
             </div>) : null}
             {!buttonVisible ? (
                 <div className="search__buttons">

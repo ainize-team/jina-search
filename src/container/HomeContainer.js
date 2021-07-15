@@ -7,6 +7,7 @@ const HomeContainer = ({hideButtons = false}) => {
     const [result, setResult] = useState([]);
     const [buttonVisible, setButtonVisible] = useState(hideButtons);
 
+
     const TextSearch = async (url, input ,top_k,rs=[]) =>{
         const postResponse =  await fetch(url,
             {
@@ -21,16 +22,19 @@ const HomeContainer = ({hideButtons = false}) => {
         if (postResponse.status === 200) {
             const response = await postResponse.json();
             console.log(response)
-            let qa = "";
+            let qa = [];
             let i;
             for (i = 0; i < top_k; i++)
-                qa += response["search"]["docs"][0]["matches"][i]["text"];
+                qa[i] = (String(response["search"]["docs"][0]["matches"][i]["score"]["value"].toFixed(3))+" "+response["search"]["docs"][0]["matches"][i]["text"]
+                    );
 
-            rs.push(qa)
+            rs.push(qa);
         }
     }
 
-    const search =  (e) => {
+
+
+    const search =  async (e) => {
         let rs = [];
         e.preventDefault();
         // window.location.href = "/search"
@@ -39,15 +43,10 @@ const HomeContainer = ({hideButtons = false}) => {
             const model = models.modelData[0];
             let url = model.modelUrl;
             setButtonVisible(true)
-            TextSearch(url, input, 50, rs);
-                console.log("response: ", rs[0])
-
+            await TextSearch(url, input, 50, rs);
+                console.log("response: ", rs)
         setResult(rs)
         }
-            // Show the result
-            // let result = await gpt3.getSnippetPrediction(input)
-            // console.log(result.data.answer)
-            // setResult(result.data.answer)
         };
         return (
             <Home
