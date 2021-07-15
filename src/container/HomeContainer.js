@@ -27,8 +27,10 @@ const HomeContainer = ({hideButtons = false}) => {
             for (i = 0; i < top_k; i++)
                 qa[i] = (String(response["search"]["docs"][0]["matches"][i]["score"]["value"].toFixed(3))+" "+response["search"]["docs"][0]["matches"][i]["text"]
                     );
-
             rs.push(qa);
+        }
+        else {
+            throw "respone을 받지 못했습니다.";
         }
     }
 
@@ -37,15 +39,15 @@ const HomeContainer = ({hideButtons = false}) => {
     const search =  async (e) => {
         let rs = [];
         e.preventDefault();
-        // window.location.href = "/search"
+        window.location.href = `/search?p=$`
         console.log("You hit search", input);
         if (input.length > 0) {
             const model = models.modelData[0];
             let url = model.modelUrl;
             setButtonVisible(true)
             await TextSearch(url, input, 50, rs);
-                console.log("response: ", rs)
-        setResult(rs)
+            console.log("response: ", rs)
+            setResult(rs)
         }
         };
         return (

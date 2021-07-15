@@ -17,9 +17,13 @@ const Search = ({input, result, buttonVisible, setInput, search}) => {
             </div>
             {result ? (<div className="search__result">
                 {result.map(result => result.map(
-                    elements => { return (<li>
-                        {elements}
-                    </li>)}
+                    elements => {
+                        return (
+                            <li>
+                                {elements}
+                            </li>
+                        )
+                    }
                 ))}
             </div>) : null}
             {!buttonVisible ? (
