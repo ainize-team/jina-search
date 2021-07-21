@@ -92,3 +92,57 @@
   .searchPage__resultSnippet {
     margin-top: 10px;
   }
+  .Image-name{
+    height: 150px;
+    width: 150px;
+  }
+  .App-container{
+    width: 150px;
+    height: auto;
+    align : center;
+    display: block;
+    margin: 20px 20px 20px 20px;
+
+  }
+  .app_result{
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+    max-width: 1000px;
+    background-color: #F4F4F7;
+    border-radius: 10px;
+    margin: 0 auto;
+  }
+
+.meme_result{
+  height: auto;
+  width: auto;
+  margin: 0 auto;
+  align-items: center;
+  max-width: 1400px;
+  margin-top: 10px;
+  display: block;
+  text-align: center;
+  background-color: #F4F4F7;
+  border-radius: 10px;
+}
+.meme-image{
+  width: 400px;
+  height: auto;
+  margin: 30px 20px 20px 30px;
+}
+.model-Title{
+  text-align: center;
+}
+.Model_result{
+  text-align: center;
+}
+.wiki-sentence{
+  list-style-image: url("https://img.icons8.com/officel/16/000000/jake.png");
+  font-size: 16px;
+  margin: 5px;
+}
+
+.icon{
+  vertical-align: middle;
+}

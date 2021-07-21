@@ -25,7 +25,7 @@ const Search = ({buttonVisible,input,result,search,setInput}) => {
 
             {!buttonVisible ? (
                 <div className="search__buttons">
-                    <Button type="submit" onClick={search} variant="outlined">Google Search</Button>
+                    <Button type="submit" onClick={search} variant="outlined">Jina Search</Button>
                     <Button variant="outlined" type="submit" onClick={search}>I'm Feeling Lucky</Button>
                 </div>
             ) : (
