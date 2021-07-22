@@ -16,6 +16,11 @@ const models = {
             name: "meme",
             modelUrl: "https://main-jina-meme-search-docker-msh1273.endpoint.ainize.ai/search"
 
+        },
+        {
+            id: 4,
+            name: "meme",
+            modelUrl: "https://master-crossmodal-dleunji.endpoint.ainize.ai/api/search"
         }
 
     ]

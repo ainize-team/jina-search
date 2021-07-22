@@ -7,6 +7,10 @@ import * as ractions from "../redux/results/actions";
 import {connect} from "react-redux";
 
 const SearchPage = ({input, result,search,setInput,setResult}) => {
+  const handleDrag = (e) => {
+    e.dataTransfer.setData('data',e.target.src);
+  }
+
 return (
   <div className="searchPage">
 
@@ -27,6 +31,31 @@ return (
     </div>
 
       <div className="Model-result">
+        {result['Textto'] ? (<h1 className="model-Title"><img src="https://img.icons8.com/color/48/000000/image.png" className="icon"/>Image to Text</h1> ) : null}
+        {result['Textto'] ? (<div className="search__result">
+          {result['Textto'].map(factor => {
+            return (
+                <li className="wiki-sentence">
+                  {factor}
+                </li>
+            )
+          })}
+
+        </div> ) : null}
+
+
+        {result['cross-modal'] ? (<h1 className="model-Title"><img src="https://img.icons8.com/color/48/000000/image.png" className="icon"/>Related Image</h1> ) : null}
+        {result['cross-modal'] ? (<div className="cross_result">
+          {result['cross-modal'].map(factor => {
+            return (
+            <img className="cross_image" src={factor} onDragStart={(e) => handleDrag(e)}/>
+            )
+          })}
+
+        </div> ):null}
+
+
+
         {result['wiki-sentence'] ? (
             <h1 className="model-Title"><img src="https://img.icons8.com/ios/50/000000/wikipedia.png" className="icon"/>Related Wikipedia sentences </h1>
         ) : null}
@@ -67,8 +96,8 @@ return (
                   <img className="meme-image" src={factor}/>
             )
           })}
-
         </div>) : null}
+
       </div>
   </div>
 

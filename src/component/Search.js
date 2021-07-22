@@ -12,14 +12,22 @@ const Search = ({buttonVisible,input,result,search,setInput}) => {
     const handleChangeInput = (event) => {
         setInput(event.target.value);
         console.log(input);
+
+    }
+    const handleDragover= (event) =>{
+            event.preventDefault();
     }
 
+    const handleDrop = (event) => {
+        let dt = event.dataTransfer.getData('data');
+        setInput(dt);
+    }
 
 
     return (
         <form className="search" onSubmit={search}>
             <div className="search__input">
-                <input value={input} onChange={(e) => handleChangeInput(e)} />
+                <input value={input} onChange={(e) => handleChangeInput(e)} onDragOver={e=>handleDragover(e)} onDrop={e=>handleDrop(e)}/>
                 <img src={sendIcon} onClick={search} alt="search"/>
             </div>
 

@@ -5,6 +5,7 @@ import * as actions from "../redux/inputs/actions";
 import * as ractions from "../redux/results/actions";
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
+import {setResult} from "../redux/results/actions";
 const HomeContainer = (props,{hideButtons = false}) => {
     const history = useHistory();
     const [buttonVisible, setButtonVisible] = useState(hideButtons);
@@ -89,38 +90,95 @@ const HomeContainer = (props,{hideButtons = false}) => {
         }
     }
 
+    const crossSearch =async (url,input,top_k,rs=[]) =>{
+        const postResponse =  await fetch(url,
+            {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    "top_k": top_k,
+                    "mode": "search",
+                    "data": [input]
+                })
+            })
+        if (postResponse.status === 200) {
+            const response = await postResponse.json();
+            console.log("cross : ", response);
+            let i;
+            for(i =0;i<top_k;i++)
+                rs[i] = response["search"]["docs"][0]["matches"][i]["uri"]
+        }
+        else {
+            console.log("respone을 받지 못했습니다.");
+        }
+    }
+
+    const TexttoSearch =async (url,input,top_k,rs=[]) =>{
+        const postResponse =  await fetch(url,
+            {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({
+                    "top_k": top_k,
+                    "mode": "search",
+                    "data": [input]
+                })
+            })
+        if (postResponse.status === 200) {
+            const response = await postResponse.json();
+            console.log("Textto : ", response);
+            let i;
+            for(i=0;i<top_k;i++)
+                rs[i] = response["search"]["docs"][0]["matches"][i]["text"];
+        }
+        else {
+            console.log("respone을 받지 못했습니다.");
+        }
+    }
 
     const search =  async (e) => {
+
         let rs = [];
         let dic ={};
         let app_Array = [];
         let meme_Array = [];
+        let cross_Array = [];
         console.log("Search Component")
         e.preventDefault();
         history.push("/search");
-
+        props.setResult({});
         // window.location.href = `/search`
         setButtonVisible(false);
+        const wiki_model = models.modelData[0];
+        const app_model = models.modelData[1];
+        const meme_model = models.modelData[2];
+        const cross_model = models.modelData[3];
+
+        let wiki_url = wiki_model.modelUrl;
+        let app_url = app_model.modelUrl;
+        let meme_url = meme_model.modelUrl;
+        let cross_url = cross_model.modelUrl;
         console.log("You hit search", props.input);
-        if (props.input.length > 0) {
+        if (props.input.length > 0 && !props.input.startsWith('data:image')) {
             dic['wiki-sentence'] = null;
             dic['App-store'] = null;
-            const wiki_model = models.modelData[0];
-            const app_model = models.modelData[1];
-            const meme_model = models.modelData[2];
+            dic['cross-modal'] = null;
 
-            let wiki_url = wiki_model.modelUrl;
-            let app_url = app_model.modelUrl;
-            let meme_url = meme_model.modelUrl;
             setButtonVisible(true)
             await TextSearch(wiki_url, props.input, 20, rs);
             await appSearch(app_url, props.input,10,app_Array);
             await memeSearch(meme_url, props.input,15,meme_Array);
+            await crossSearch(cross_url,props.input,15, cross_Array);
             dic['wiki-sentence'] = rs;
             dic['App-store'] = app_Array;
             dic['meme'] = meme_Array;
+            dic['cross-modal'] = cross_Array;
             props.setResult(dic);
-
+        }
+        else {
+            await TexttoSearch(cross_url,props.input,15, cross_Array);
+            dic['Textto'] = cross_Array;
+            props.setResult(dic);
         }
         };
 
