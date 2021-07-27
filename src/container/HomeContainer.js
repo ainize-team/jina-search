@@ -196,6 +196,8 @@ const HomeContainer = (props,{hideButtons = false}) => {
         let people_url = people_model.modelUrl;
 
         console.log("You hit search", props.input);
+
+
         if (props.input.length > 0 && !props.input.startsWith('data:image')) {
             dic['wiki-sentence'] = null;
             dic['App-store'] = null;
@@ -204,6 +206,7 @@ const HomeContainer = (props,{hideButtons = false}) => {
             dic['people'] = null;
 
             setButtonVisible(true)
+
             await TextSearch(wiki_url, props.input, 20, rs);
             await appSearch(app_url, props.input,15,app_Array);
             await memeSearch(meme_url, props.input,15,meme_Array);

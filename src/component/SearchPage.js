@@ -28,6 +28,14 @@ return (
                 search={search}
         />
       </div>
+      <div className="community">
+        <a href="https://github.com/ainize-team/jina-search">
+          <img src="https://img.icons8.com/fluent/48/000000/github.png"/>
+        </a>
+        <a href="https://slack.jina.ai/">
+          <img src="https://img.icons8.com/color/48/000000/slack-new.png"/>
+        </a>
+      </div>
     </div>
 
       <div className="Model-result">
