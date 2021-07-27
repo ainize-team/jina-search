@@ -3,17 +3,14 @@ import ainizeIcon from '../image/ainize-logo.svg';
 import githubIcon from '../image/git-hub-icon.svg';
 import infoIcon from '../image/info-icon.svg';
 import Search from './Search';
-const Home = ({input, result, buttonVisible, setInput, search}) => {
+const Home = ({buttonVisible, search}) => {
     return(
         <div className="home">
             <div className="home__body">
-                <img src="https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" alt=""/>
+                <img src="https://lever-client-logos.s3.us-west-2.amazonaws.com/4347e16d-b068-4137-be7c-fedb5d3d7a9a-1612287646627.png" alt=""/>
                 <div className="home__inputContainer">
                     <Search
-                        input={input}
-                        result={result}
                         buttonVisible={buttonVisible}
-                        setInput={setInput}
                         search={search}
                         />
                 </div>
