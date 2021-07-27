@@ -8,7 +8,7 @@ const models = {
         {
             id: 2,
             name: "app-store",
-            modelUrl: "https://main-jina-app-store-search-docker-msh1273.endpoint.ainize.ai/search"
+            modelUrl: "https://main-jina-appstore-search-msh1273.endpoint.ainize.ai/search"
 
         },
         {
@@ -19,8 +19,13 @@ const models = {
         },
         {
             id: 4,
-            name: "meme",
-            modelUrl: "https://master-crossmodal-dleunji.endpoint.ainize.ai/api/search"
+            name: "cross-modal",
+            modelUrl: "https://main-cross-modal-search-audrb96.endpoint.ainize.ai/search"
+        },
+        {
+            id: 5,
+            name: "people-wiki",
+            modelUrl: "https://master-jina-people-wiki-search-msh1273.endpoint.ainize.ai/search"
         }
 
     ]

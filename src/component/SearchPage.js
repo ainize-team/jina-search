@@ -53,6 +53,28 @@ return (
           })}
 
         </div> ):null}
+        {result['people'] ? (
+            <h1 className="model-Title"><img src="https://img.icons8.com/doodle/48/000000/walter-white.png" className="icon"/>Related people</h1>
+        ):null
+        }
+
+        {result['people']? (<div className="people_result">
+              {result['people'].map(factor => {
+                return (
+                    <div className="people_container">
+                      <a href={factor["URI"]}>
+                        <div className="people_name">
+                          {factor["name"]}
+                        </div>
+                      </a>
+                      <div className="people_text">
+                        {factor["text"]}
+                      </div>
+                    </div>
+                )
+              })}
+            </div>
+        ) : null}
 
 
 

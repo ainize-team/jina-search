@@ -1,3 +1,6 @@
+
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap');
+
 .searchPage__header {
     display: flex;
     position: sticky;
@@ -99,19 +102,20 @@
   .App-container{
     width: 150px;
     height: auto;
-    align : center;
-    display: block;
-    margin: 20px 20px 20px 20px;
+    display: inline-block;
+    margin: 20px;
 
   }
   .app_result{
-    margin-top: 30px;
-    display: flex;
-    justify-content: center;
-    max-width: 1000px;
+    height: auto;
+    width: auto;
+    margin: 0 auto;
+    align-items: center;
+    max-width: 1400px;
+    display: block;
     background-color: #F4F4F7;
     border-radius: 10px;
-    margin: 0 auto;
+    padding-top: 5px;
   }
 
 .meme_result{
@@ -163,4 +167,21 @@
   width: 200px;
   height: auto;
   margin: 30px 20px 20px 30px;
+}
+.people_container{
+  max-width: 1000px;
+  margin: 0 auto;
+  background-color: #F4F4F7;
+  border-radius: 10px;
+  padding-top: 10px;
+  padding-left:10px;
+}
+
+a {
+  text-decoration-line: none;
+}
+
+.people_name{
+  font-size: 25px;
+  font-family: 'Rubik', sans-serif;
 }
