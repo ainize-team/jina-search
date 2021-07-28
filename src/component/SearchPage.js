@@ -91,7 +91,7 @@ return (
             <h1 className="model-Title"><img src="https://img.icons8.com/ios/50/000000/wikipedia.png" className="icon"/>Related Wikipedia sentences </h1>
         ) : null}
 
-          {result['wiki-sentence'] ? (<div className="search__result">
+        {result['wiki-sentence'] && result['wiki-sentence'][0] ? (<div className="search__result">
               {result['wiki-sentence'][0].map(factor => {
                       return (<li className="wiki-sentence">
                           {factor}
