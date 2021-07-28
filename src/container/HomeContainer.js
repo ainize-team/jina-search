@@ -5,11 +5,11 @@ import * as actions from "../redux/inputs/actions";
 import * as ractions from "../redux/results/actions";
 import {connect} from "react-redux";
 import {useHistory} from "react-router-dom";
-import {setResult} from "../redux/results/actions";
+import * as Loading_action from "../redux/loading/actions"
+
 const HomeContainer = (props,{hideButtons = false}) => {
     const history = useHistory();
     const [buttonVisible, setButtonVisible] = useState(hideButtons);
-
 
     const TextSearch = async (url, input ,top_k,rs=[]) =>{
         const postResponse =  await fetch(url,
@@ -206,7 +206,7 @@ const HomeContainer = (props,{hideButtons = false}) => {
             dic['people'] = null;
 
             setButtonVisible(true)
-
+            props.setLoading(true);
             await TextSearch(wiki_url, props.input, 20, rs);
             await appSearch(app_url, props.input,15,app_Array);
             await memeSearch(meme_url, props.input,15,meme_Array);
@@ -218,11 +218,14 @@ const HomeContainer = (props,{hideButtons = false}) => {
             dic['meme'] = meme_Array;
             dic['cross-modal'] = cross_Array;
             dic['people'] = people_Array;
+            props.setLoading(false);
             props.setResult(dic);
         }
         else {
+            props.setLoading(true);
             await TexttoSearch(cross_url,props.input,15, cross_Array);
             dic['Textto'] = cross_Array;
+            props.setLoading(false);
             props.setResult(dic);
         }
         };
@@ -238,14 +241,16 @@ const HomeContainer = (props,{hideButtons = false}) => {
 const mapStateToProps = (state) =>{
     return {
         input: state.inputs.input,
-        result: state.results.result
+        result: state.results.result,
+        loading: state.loading.loading
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setInput : (input) => {dispatch(actions.setInput(input))},
-        setResult : (result) =>{dispatch(ractions.setResult(result))}
+        setResult : (result) =>{dispatch(ractions.setResult(result))},
+        setLoading: (loading) =>{dispatch(Loading_action.setLoading(loading))}
     }
 }
 

@@ -5,7 +5,7 @@ import Search from "./Search"
 import * as actions from "../redux/inputs/actions";
 import * as ractions from "../redux/results/actions";
 import {connect} from "react-redux";
-
+import LoadingComponent from "./LoadingComponent";
 const SearchPage = ({input, result,search,setInput,setResult}) => {
   const handleDrag = (e) => {
     e.dataTransfer.setData('data',e.target.src);
@@ -39,6 +39,7 @@ return (
     </div>
 
       <div className="Model-result">
+        <LoadingComponent/>
         {result['Textto'] ? (<h1 className="model-Title"><img src="https://img.icons8.com/color/48/000000/image.png" className="icon"/>Image to Text</h1> ) : null}
         {result['Textto'] ? (<div className="search__result">
           {result['Textto'].map(factor => {

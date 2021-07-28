@@ -3,7 +3,7 @@ import ainizeIcon from '../image/ainize-logo.svg';
 import githubIcon from '../image/git-hub-icon.svg';
 import infoIcon from '../image/info-icon.svg';
 import Search from './Search';
-const Home = ({buttonVisible, search}) => {
+const Home = ({buttonVisible, search,loading}) => {
     return(
         <div className="home">
             <div className="home__body">
@@ -12,6 +12,7 @@ const Home = ({buttonVisible, search}) => {
                     <Search
                         buttonVisible={buttonVisible}
                         search={search}
+                        loading={loading}
                         />
                 </div>
                 <div className="home__footer">
