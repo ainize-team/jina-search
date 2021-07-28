@@ -20,7 +20,7 @@ const models = {
         {
             id: 4,
             name: "cross-modal",
-            modelUrl: "https://main-cross-modal-search-audrb96.endpoint.ainize.ai/search"
+            modelUrl: "https://main-jina-cross-modal-docker-msh1273.endpoint.ainize.ai/search"
         },
         {
             id: 5,
