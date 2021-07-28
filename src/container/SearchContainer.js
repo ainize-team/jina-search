@@ -4,7 +4,7 @@ import models from "../store/models";
 import * as actions from "../redux/inputs/actions";
 import * as ractions from "../redux/results/actions";
 import {connect} from "react-redux";
-import {setResult} from "../redux/results/actions";
+import * as Loading_action from "../redux/loading/actions";
 
 const SearchContainer = (props) => {
     const Text_Search = async (url, input ,top_k,rs=[]) =>{
@@ -57,7 +57,6 @@ const SearchContainer = (props) => {
                     "Name" : response["data"]["docs"][0]["matches"][i]["tags"]["Name"].substring(0,30),
                     "Rating" : Number(response["data"]["docs"][0]["matches"][i]["tags"]["Average User Rating"]).toFixed(1),
                     "Description" : response["data"]["docs"][0]["matches"][i]["tags"]["Description"]}
-            console.log(rs);
         }
         else {
             console.log("respone을 받지 못했습니다.");
@@ -192,6 +191,7 @@ const SearchContainer = (props) => {
         let people_url = people_model.modelUrl;
 
         if (props.input.length > 0 && !props.input.startsWith('data:image')) {
+            props.setLoading(true)
             await Text_Search(wiki_url, props.input, 20, rs);
             await app_Search(app_url, props.input,15,app_Array);
             await meme_Search(meme_url,props.input,10,meme_Array);
@@ -204,12 +204,14 @@ const SearchContainer = (props) => {
             dic['meme'] = meme_Array;
             dic['cross-modal'] = cross_Array;
             dic['people'] = people_Array;
-
+            props.setLoading(false);
             props.setResult(dic);
         }
         else {
+            props.setLoading(true);
             await Textto_Search(cross_url, props.input,15,cross_Array);
             dic['Textto'] = cross_Array;
+            props.setLoading(false);
             props.setResult(dic);
         }
     };
@@ -223,14 +225,16 @@ const SearchContainer = (props) => {
 const mapStateToProps = (state) =>{
     return {
         input: state.inputs.input,
-        result: state.results.result
+        result: state.results.result,
+        loading:state.loading.loading
     };
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
         setInput : (input) => {dispatch(actions.setInput(input))},
-        setResult : (result) =>{dispatch(ractions.setResult(result))}
+        setResult : (result) =>{dispatch(ractions.setResult(result))},
+        setLoading: (loading) =>{dispatch(Loading_action.setLoading(loading))}
     }
 }
 
