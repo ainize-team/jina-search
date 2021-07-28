@@ -6,40 +6,63 @@ import * as ractions from "../redux/results/actions";
 import {connect} from "react-redux";
 import * as Loading_action from "../redux/loading/actions";
 
+const fetch = require('node-fetch');
+const AbortController = require('abort-controller');
+
+const TIMEOUT = 15000;
+
 const SearchContainer = (props) => {
     const Text_Search = async (url, input ,top_k,rs=[]) =>{
-        const postResponse =  await fetch(url,
-            {
-                method: "POST",
-                headers: {"Content-Type": "application/json"},
-                body: JSON.stringify({
-                    "top_k": top_k,
-                    "mode": "search",
-                    "data": [input]
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            controller.abort();
+        }, TIMEOUT);
+
+        try {
+            const postResponse =  await fetch(url,
+                {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    signal: controller.signal,
+                    body: JSON.stringify({
+                        "top_k": top_k,
+                        "mode": "search",
+                        "data": [input]
+                    })
                 })
-            })
-        if (postResponse.status === 200) {
-            const response = await postResponse.json();
-            console.log(response)
-            let qa = [];
-            let i;
-            for (i = 0; i < top_k; i++)
-                qa[i] = (String(response["search"]["docs"][0]["matches"][i]["score"]["value"].toFixed(3))+" "+response["search"]["docs"][0]["matches"][i]["text"]
-                );
-            rs.push(qa);
-        }
-        else {
-            console.log("respone을 받지 못했습니다.");
+            if (postResponse.status === 200) {
+                const response = await postResponse.json();
+                console.log(response)
+                let qa = [];
+                let i;
+                for (i = 0; i < top_k; i++)
+                    qa[i] = (String(response["search"]["docs"][0]["matches"][i]["score"]["value"].toFixed(3))+" "+response["search"]["docs"][0]["matches"][i]["text"]
+                    );
+                rs.push(qa);
+            }
+            else {
+                console.log("respone을 받지 못했습니다.");
+                rs=null;
+            }
+        } catch (e) {
+            console.log("Text_Search respone을 받지 못했습니다.");
             rs=null;
+        } finally {
+            clearTimeout(timeout);
         }
     }
 
     const app_Search =async (url,input,top_k,rs=[]) =>{
-
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            controller.abort();
+        }, TIMEOUT);
+        try {
         const postResponse =  await fetch(url,
             {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
+                signal: controller.signal,
                 body: JSON.stringify({
                     "top_k": top_k,
                     "mode": "search",
@@ -62,9 +85,20 @@ const SearchContainer = (props) => {
             console.log("respone을 받지 못했습니다.");
             rs=null;
         }
+        } catch (e) {
+            console.log("app_Search respone을 받지 못했습니다.");
+            rs=null;
+        } finally {
+            clearTimeout(timeout);
+        }
     }
 
     const meme_Search =async (url,input,top_k,rs=[]) =>{
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            controller.abort();
+        }, TIMEOUT);
+        try {
         const postResponse =  await fetch(url,
             {
                 method: "POST",
@@ -72,6 +106,7 @@ const SearchContainer = (props) => {
                 body: JSON.stringify({
                     "top_k": top_k,
                     "mode": "search",
+                    signal: controller.signal,
                     "data": [input]
                 })
             })
@@ -86,13 +121,25 @@ const SearchContainer = (props) => {
             console.log("respone을 받지 못했습니다.");
             rs=null;
         }
+        } catch (e) {
+            console.log("meme_Search respone을 받지 못했습니다.");
+            rs=null;
+        } finally {
+            clearTimeout(timeout);
+        }
     }
 
     const cross_Search =async (url,input,top_k,rs=[]) =>{
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            controller.abort();
+        }, TIMEOUT);
+        try {
         const postResponse =  await fetch(url,
             {
                 method: "POST",
                 headers: {"Content-Type": "application/json"},
+                signal: controller.signal,
                 body: JSON.stringify({
                     "top_k": top_k,
                     "mode": "search",
@@ -110,8 +157,19 @@ const SearchContainer = (props) => {
             console.log("respone을 받지 못했습니다.");
             rs=null;
         }
+        } catch (e) {
+            console.log("cross_Search respone을 받지 못했습니다.");
+            rs=null;
+        } finally {
+            clearTimeout(timeout);
+        }
     }
     const Textto_Search =async (url,input,top_k,rs=[]) =>{
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            controller.abort();
+        }, TIMEOUT);
+        try {
         const postResponse =  await fetch(url,
             {
                 method: "POST",
@@ -119,6 +177,7 @@ const SearchContainer = (props) => {
                 body: JSON.stringify({
                     "top_k": top_k,
                     "mode": "search",
+                    signal: controller.signal,
                     "data": [input]
                 })
             })
@@ -132,8 +191,19 @@ const SearchContainer = (props) => {
             console.log("respone을 받지 못했습니다.");
             rs=null;
         }
+        } catch (e) {
+            console.log("Textto_Search respone을 받지 못했습니다.");
+            rs=null;
+        } finally {
+            clearTimeout(timeout);
+        }
     }
     const people_Search =async (url,input,top_k,rs=[]) =>{
+        const controller = new AbortController();
+        const timeout = setTimeout(() => {
+            controller.abort();
+        }, TIMEOUT);
+        try {
         const postResponse =  await fetch(url,
             {
                 method: "POST",
@@ -141,6 +211,7 @@ const SearchContainer = (props) => {
                 body: JSON.stringify({
                     "top_k": top_k,
                     "mode": "search",
+                    signal: controller.signal,
                     "data": [input]
                 })
             })
@@ -159,6 +230,12 @@ const SearchContainer = (props) => {
         else {
             console.log("respone을 받지 못했습니다.");
             rs=null;
+        }
+        } catch (e) {
+            console.log("people respone을 받지 못했습니다.");
+            rs=null;
+        } finally {
+            clearTimeout(timeout);
         }
     }
 
@@ -192,11 +269,13 @@ const SearchContainer = (props) => {
 
         if (props.input.length > 0 && !props.input.startsWith('data:image')) {
             props.setLoading(true)
-            await Text_Search(wiki_url, props.input, 20, rs);
-            await app_Search(app_url, props.input,15,app_Array);
-            await meme_Search(meme_url,props.input,10,meme_Array);
-            await cross_Search(cross_url,props.input,3,cross_Array);
-            await people_Search(people_url, props.input,15,people_Array);
+            await Promise.all([
+                Text_Search(wiki_url, props.input, 20, rs),
+                app_Search(app_url, props.input,15,app_Array),
+                meme_Search(meme_url, props.input,15,meme_Array),
+                cross_Search(cross_url,props.input,3, cross_Array),
+                people_Search(people_url, props.input,15,people_Array)
+            ])
 
 
             dic['wiki-sentence'] = rs;
